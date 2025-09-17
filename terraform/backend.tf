@@ -1,6 +1,6 @@
 terraform {
   backend "oss" {
-    bucket             = "terraform-state-bucket"
+    bucket             = "jenkins0915"
     prefix             = "landing-zone"
     key                = "terraform-state.tfstate"
     region             = "cn-hongkong"
