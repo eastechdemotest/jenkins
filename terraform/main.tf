@@ -3,12 +3,6 @@ provider "alicloud" {
   region = "cn-hongkong"  # Change to your desired region, e.g., cn-beijing
 }
 
-# Management account provider (for Resource Directory and account creation)
-provider "alicloud" {
-  region = var.region
-  # Credentials sourced from environment variables or Jenkins (ALICLOUD_ACCESS_KEY, ALICLOUD_SECRET_KEY)
-}
-
 # Call the resource_directory module
 module "resource_directory" {
   source = "./module/resource_directory"
