@@ -3,7 +3,7 @@ terraform {
   required_providers {
     alicloud = {
       source  = "aliyun/alicloud"
-      version = ">= 1.248.0"  # Use version supporting abandonable_check_id
+      version = ">= 1.248.0"  # Latest version for compatibility
     }
   }
 }
@@ -14,48 +14,44 @@ provider "alicloud" {
   # Credentials sourced from environment variables or Jenkins (ALICLOUD_ACCESS_KEY, ALICLOUD_SECRET_KEY)
 }
 
-# Infra account provider (placeholder for future resources, not used for Resource Directory)
-provider "alicloud" {
-  alias  = "infra"
-  region = var.region
-  assume_role {
-    role_arn = "acs:ram::${module.landingzone_resource_structure.shared_services_account_id}:role/OrganizationRole"
-    # Note: OrganizationRole must exist in infra account for future cross-account access
-  }
+# Get the Resource Directory to obtain the root folder ID
+data "alicloud_resource_manager_resource_directory" "root" {}
+
+# Create Jenkins folder under Root folder (only if it doesn't exist)
+resource "alicloud_resource_manager_folder" "jenkins_folder" {
+  count            = var.jenkins_folder_id == "" ? 1 : 0
+  folder_name      = var.jenkins_folder_name
+  parent_folder_id = data.alicloud_resource_manager_resource_directory.root.root_folder_id
 }
 
-# Landing Zone Resource Directory and account structure
-module "landingzone_resource_structure" {
-  source = "alibabacloud-automation/landing-zone-resource-structure/alicloud"
-
-  enable_resource_directory = var.enable_resource_directory
-  core_folder_name         = var.core_folder_name
-
-  # Infra account (Shared Services for future networking, security)
-  shared_services_account = {
-    name                  = var.infra_account_name
-    account_name_prefix   = var.infra_account_prefix
-    abandonable_check_id  = var.abandonable_check_ids  # Updated to new field
-    financial_mode        = var.financial_mode
-  }
-
-  # Log Archive account (for centralized logging with SLS)
-  log_archive_account = {
-    name                  = var.log_archive_account_name
-    account_name_prefix   = var.log_archive_account_prefix
-    abandonable_check_id  = var.abandonable_check_ids  # Updated to new field
-    financial_mode        = var.financial_mode
-  }
-}
-
-# Create Dev folder under Core folder
+# Create Dev folder under Jenkins folder (only if it doesn't exist)
 resource "alicloud_resource_manager_folder" "dev_folder" {
+  count            = var.dev_folder_id == "" ? 1 : 0
   folder_name      = var.dev_folder_name
-  parent_folder_id = module.landingzone_resource_structure.core_folder_id
+  parent_folder_id = var.jenkins_folder_id != "" ? var.jenkins_folder_id : alicloud_resource_manager_folder.jenkins_folder[0].id
 }
 
-# Create Prod folder under Core folder
+# Create Dev account under Dev folder
+resource "alicloud_resource_manager_account" "dev_account" {
+  count                    = var.dev_account_id == "" ? 1 : 0
+  display_name             = var.dev_account_name
+  folder_id                = var.dev_folder_id != "" ? var.dev_folder_id : alicloud_resource_manager_folder.dev_folder[0].id
+  payer_account_id         = var.payer_account_id
+  abandonable_check_id     = var.abandonable_check_ids
+}
+
+# Create Prod folder under Jenkins folder (only if it doesn't exist)
 resource "alicloud_resource_manager_folder" "prod_folder" {
+  count            = var.prod_folder_id == "" ? 1 : 0
   folder_name      = var.prod_folder_name
-  parent_folder_id = module.landingzone_resource_structure.core_folder_id
+  parent_folder_id = var.jenkins_folder_id != "" ? var.jenkins_folder_id : alicloud_resource_manager_folder.jenkins_folder[0].id
+}
+
+# Create Prod account under Prod folder
+resource "alicloud_resource_manager_account" "prod_account" {
+  count                    = var.prod_account_id == "" ? 1 : 0
+  display_name             = var.prod_account_name
+  folder_id                = var.prod_folder_id != "" ? var.prod_folder_id : alicloud_resource_manager_folder.prod_folder[0].id
+  payer_account_id         = var.payer_account_id
+  abandonable_check_id     = var.abandonable_check_ids
 }
