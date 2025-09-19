@@ -1,13 +1,3 @@
-# Provider configuration
-terraform {
-  required_providers {
-    alicloud = {
-      source  = "aliyun/alicloud"
-      version = ">= 1.0.0"
-    }
-  }
-}
-
 provider "alicloud" {
   # Access Key and Secret Key are read from environment variables by default
   region = "cn-hongkong"  # Change to your desired region, e.g., cn-beijing
