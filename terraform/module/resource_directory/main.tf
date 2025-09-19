@@ -3,7 +3,7 @@ terraform {
   required_providers {
     alicloud = {
       source  = "aliyun/alicloud"
-      version = ">= 1.229.0"  # Ensure compatibility with Landing Zone module
+      version = ">= 1.248.0"  # Use version supporting abandonable_check_id
     }
   }
 }
@@ -33,29 +33,29 @@ module "landingzone_resource_structure" {
 
   # Infra account (Shared Services for future networking, security)
   shared_services_account = {
-    name                = var.infra_account_name
-    account_name_prefix = var.infra_account_prefix
-    abandon_able_check_id = var.abandon_able_check_ids
-    financial_mode      = var.financial_mode
+    name                  = var.infra_account_name
+    account_name_prefix   = var.infra_account_prefix
+    abandonable_check_id  = var.abandonable_check_ids  # Updated to new field
+    financial_mode        = var.financial_mode
   }
 
   # Log Archive account (for centralized logging with SLS)
   log_archive_account = {
-    name                = var.log_archive_account_name
-    account_name_prefix = var.log_archive_account_prefix
-    abandon_able_check_id = var.abandon_able_check_ids
-    financial_mode      = var.financial_mode
+    name                  = var.log_archive_account_name
+    account_name_prefix   = var.log_archive_account_prefix
+    abandonable_check_id  = var.abandonable_check_ids  # Updated to new field
+    financial_mode        = var.financial_mode
   }
 }
 
 # Create Dev folder under Core folder
 resource "alicloud_resource_manager_folder" "dev_folder" {
-  folder_name = var.dev_folder_name
+  folder_name      = var.dev_folder_name
   parent_folder_id = module.landingzone_resource_structure.core_folder_id
 }
 
 # Create Prod folder under Core folder
 resource "alicloud_resource_manager_folder" "prod_folder" {
-  folder_name = var.prod_folder_name
+  folder_name      = var.prod_folder_name
   parent_folder_id = module.landingzone_resource_structure.core_folder_id
 }

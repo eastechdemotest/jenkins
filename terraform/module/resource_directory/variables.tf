@@ -40,7 +40,7 @@ variable "log_archive_account_prefix" {
   default     = "log-archive-"
 }
 
-variable "abandon_able_check_ids" {
+variable "abandonable_check_ids" {
   description = "List of services to check before account deletion"
   type        = list(string)
   default     = ["SP_fc_fc"]

@@ -14,7 +14,7 @@ output "infra_account_id" {
 }
 
 output "log_archive_account_id" {
-  value       = module.landingzone_resource_structure.log_archive_account_id
+  value       = module.landingzone_resource_structure.log_account_id
   description = "ID of the Log Archive account"
 }
 
