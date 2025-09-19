@@ -7,7 +7,7 @@ variable "region" {
 variable "enable_resource_directory" {
   description = "Enable Resource Directory"
   type        = bool
-  default     = true
+  default     = false
 }
 
 variable "core_folder_name" {
