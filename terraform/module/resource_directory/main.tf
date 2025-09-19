@@ -1,36 +1,37 @@
-# Provider configuration
+# Provider configuration for Alibaba Cloud
 terraform {
   required_providers {
     alicloud = {
       source  = "aliyun/alicloud"
-      version = ">= 1.229.0"
+      version = ">= 1.229.0"  # Ensure compatibility with Landing Zone module
     }
   }
 }
 
-# Management account provider
+# Management account provider (for Resource Directory and account creation)
 provider "alicloud" {
   region = var.region
   # Credentials sourced from environment variables or Jenkins (ALICLOUD_ACCESS_KEY, ALICLOUD_SECRET_KEY)
 }
 
-# Infra account provider (using assume_role for cross-account access)
+# Infra account provider (placeholder for future resources, not used for Resource Directory)
 provider "alicloud" {
   alias  = "infra"
   region = var.region
   assume_role {
     role_arn = "acs:ram::${module.landingzone_resource_structure.shared_services_account_id}:role/OrganizationRole"
+    # Note: OrganizationRole must exist in infra account for future cross-account access
   }
 }
 
-# Landing Zone Resource Directory and accounts
+# Landing Zone Resource Directory and account structure
 module "landingzone_resource_structure" {
   source = "alibabacloud-automation/landing-zone-resource-structure/alicloud"
 
   enable_resource_directory = var.enable_resource_directory
   core_folder_name         = var.core_folder_name
 
-  # Infra account (Shared Services)
+  # Infra account (Shared Services for future networking, security)
   shared_services_account = {
     name                = var.infra_account_name
     account_name_prefix = var.infra_account_prefix
@@ -38,7 +39,7 @@ module "landingzone_resource_structure" {
     financial_mode      = var.financial_mode
   }
 
-  # Optional: Log Archive account (for centralized logging)
+  # Log Archive account (for centralized logging with SLS)
   log_archive_account = {
     name                = var.log_archive_account_name
     account_name_prefix = var.log_archive_account_prefix
@@ -46,7 +47,7 @@ module "landingzone_resource_structure" {
     financial_mode      = var.financial_mode
   }
 
-  # Resource folders for environments
+  # Resource folders for workload isolation
   resource_folders = {
     dev = {
       name             = var.dev_folder_name
@@ -62,21 +63,4 @@ module "landingzone_resource_structure" {
     Environment = "LandingZone"
     ManagedBy   = "Terraform"
   }
-}
-
-# VPC in the infra account
-resource "alicloud_vpc" "infra_vpc" {
-  provider    = alicloud.infra
-  vpc_name    = var.infra_vpc_name
-  cidr_block  = var.infra_vpc_cidr
-  description = "VPC for infra account in Alibaba Cloud Landing Zone"
-}
-
-# VSwitch in the infra VPC
-resource "alicloud_vswitch" "infra_vswitch" {
-  provider     = alicloud.infra
-  vpc_id       = alicloud_vpc.infra_vpc.id
-  cidr_block   = var.infra_vswitch_cidr
-  zone_id      = var.infra_vswitch_zone
-  vswitch_name = var.infra_vswitch_name
 }

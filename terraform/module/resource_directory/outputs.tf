@@ -17,13 +17,3 @@ output "log_archive_account_id" {
   value       = module.landingzone_resource_structure.log_archive_account_id
   description = "ID of the Log Archive account"
 }
-
-output "infra_vpc_id" {
-  value       = alicloud_vpc.infra_vpc.id
-  description = "ID of the VPC created in the infra account"
-}
-
-output "infra_vswitch_id" {
-  value       = alicloud_vswitch.infra_vswitch.id
-  description = "ID of the VSwitch created in the infra account"
-}

@@ -1,7 +1,7 @@
 variable "region" {
   description = "Alibaba Cloud region for all resources"
   type        = string
-  default     = "cn-hangzhou"
+  default     = "cn-hongkong"
 }
 
 variable "enable_resource_directory" {
@@ -62,34 +62,4 @@ variable "prod_folder_name" {
   description = "Name of the Prod folder"
   type        = string
   default     = "Prod"
-}
-
-variable "infra_vpc_name" {
-  description = "Name of the VPC in the infra account"
-  type        = string
-  default     = "infra-vpc"
-}
-
-variable "infra_vpc_cidr" {
-  description = "CIDR block for the infra VPC"
-  type        = string
-  default     = "10.0.0.0/16"
-}
-
-variable "infra_vswitch_name" {
-  description = "Name of the VSwitch in the infra VPC"
-  type        = string
-  default     = "infra-vswitch"
-}
-
-variable "infra_vswitch_cidr" {
-  description = "CIDR block for the VSwitch in the infra VPC"
-  type        = string
-  default     = "10.0.1.0/24"
-}
-
-variable "infra_vswitch_zone" {
-  description = "Availability zone for the VSwitch"
-  type        = string
-  default     = "cn-hangzhou-b"
 }
