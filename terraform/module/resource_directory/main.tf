@@ -46,21 +46,16 @@ module "landingzone_resource_structure" {
     abandon_able_check_id = var.abandon_able_check_ids
     financial_mode      = var.financial_mode
   }
+}
 
-  # Resource folders for workload isolation
-  resource_folders = {
-    dev = {
-      name             = var.dev_folder_name
-      parent_folder_id = module.landingzone_resource_structure.core_folder_id
-    }
-    prod = {
-      name             = var.prod_folder_name
-      parent_folder_id = module.landingzone_resource_structure.core_folder_id
-    }
-  }
+# Create Dev folder under Core folder
+resource "alicloud_resource_manager_folder" "dev_folder" {
+  folder_name = var.dev_folder_name
+  parent_folder_id = module.landingzone_resource_structure.core_folder_id
+}
 
-  tags = {
-    Environment = "LandingZone"
-    ManagedBy   = "Terraform"
-  }
+# Create Prod folder under Core folder
+resource "alicloud_resource_manager_folder" "prod_folder" {
+  folder_name = var.prod_folder_name
+  parent_folder_id = module.landingzone_resource_structure.core_folder_id
 }

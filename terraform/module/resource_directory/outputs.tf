@@ -17,3 +17,13 @@ output "log_archive_account_id" {
   value       = module.landingzone_resource_structure.log_archive_account_id
   description = "ID of the Log Archive account"
 }
+
+output "dev_folder_id" {
+  value       = alicloud_resource_manager_folder.dev_folder.id
+  description = "ID of the Dev folder"
+}
+
+output "prod_folder_id" {
+  value       = alicloud_resource_manager_folder.prod_folder.id
+  description = "ID of the Prod folder"
+}
