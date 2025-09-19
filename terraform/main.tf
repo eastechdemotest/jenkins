@@ -7,7 +7,6 @@ provider "alicloud" {
 module "resource_directory" {
   source = "./module/resource_directory"
 
-  enable_resource_directory   = var.enable_resource_directory
   core_folder_name           = var.core_folder_name
   infra_account_name         = var.infra_account_name
   infra_account_prefix       = var.infra_account_prefix
