@@ -3,19 +3,24 @@ provider "alicloud" {
   region = "cn-hongkong"  # Change to your desired region, e.g., cn-beijing
 }
 
-# Create a VPC
-resource "alicloud_vpc" "example" {
-  vpc_name   = "example-vpc"
-  cidr_block = "10.0.0.0/16"  # Adjust CIDR block as needed (must be valid IPv4)
-
-  # Optional: Add description
-  description = "This is a test VPC created by Terraform"
-
-  # Optional: Enable IPv6 (set to true if needed)
-  enable_ipv6 = false
+# Management account provider (for Resource Directory and account creation)
+provider "alicloud" {
+  region = var.region
+  # Credentials sourced from environment variables or Jenkins (ALICLOUD_ACCESS_KEY, ALICLOUD_SECRET_KEY)
 }
 
-# Output the VPC ID for reference
-output "vpc_id" {
-  value = alicloud_vpc.example.id
+# Call the resource_directory module
+module "resource_directory" {
+  source = "./module/resource_directory"
+
+  enable_resource_directory = var.enable_resource_directory
+  core_folder_name         = var.core_folder_name
+  infra_account_name       = var.infra_account_name
+  infra_account_prefix     = var.infra_account_prefix
+  log_archive_account_name = var.log_archive_account_name
+  log_archive_account_prefix = var.log_archive_account_prefix
+  abandon_able_check_ids   = var.abandon_able_check_ids
+  financial_mode           = var.financial_mode
+  dev_folder_name          = var.dev_folder_name
+  prod_folder_name         = var.prod_folder_name
 }
