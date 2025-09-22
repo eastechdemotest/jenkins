@@ -2,7 +2,7 @@ terraform {
   backend "oss" {
     bucket             = "jenkins0915"
     prefix             = "landing-zone"
-    key                = "terraform-state.tfstate"
+    key                = "terraform-state-new.tfstate"
     region             = "cn-hongkong"
     tablestore_endpoint = "https://jenkins.cn-hongkong.ots.aliyuncs.com"
     tablestore_table   = "statelock"
