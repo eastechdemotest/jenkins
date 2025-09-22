@@ -1,12 +1,5 @@
-provider "alicloud" {
-  # Access Key and Secret Key are read from environment variables by default
-  region = "cn-hongkong"  # Change to your desired region, e.g., cn-beijing
-}
-
 # Provider configuration using RAM user credentials from master account
 provider "alicloud" {
-  access_key = var.access_key
-  secret_key = var.secret_key
   region     = var.region
   account_id = 5855213964512610
 }
