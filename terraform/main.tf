@@ -6,7 +6,7 @@ provider "alicloud" {
 
 # Call the VPC module
 module "vpc" {
-  source         = "./modules/vpc"
+  source         = "./module/vpc"
   vpc_name       = var.vpc_name
   vpc_cidr_block = var.vpc_cidr_block
 }
