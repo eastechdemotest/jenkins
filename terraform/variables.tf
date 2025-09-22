@@ -1,14 +1,3 @@
-variable "access_key" {
-  description = "Alibaba Cloud Access Key for master account"
-  type        = string
-  sensitive   = true
-}
-
-variable "secret_key" {
-  description = "Alibaba Cloud Secret Key for master account"
-  type        = string
-  sensitive   = true
-}
 
 variable "region" {
   description = "Alibaba Cloud region"
@@ -19,6 +8,7 @@ variable "region" {
 variable "dev_account_id" {
   description = "Alibaba Cloud dev account ID under Core > DEV folder"
   type        = string
+  default     = "5855213964512610"
 }
 
 variable "vpc_name" {
