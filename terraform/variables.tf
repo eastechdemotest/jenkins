@@ -1,77 +1,34 @@
+variable "access_key" {
+  description = "Alibaba Cloud Access Key for master account"
+  type        = string
+  sensitive   = true
+}
+
+variable "secret_key" {
+  description = "Alibaba Cloud Secret Key for master account"
+  type        = string
+  sensitive   = true
+}
+
 variable "region" {
-  description = "Alibaba Cloud region for all resources"
+  description = "Alibaba Cloud region"
   type        = string
   default     = "cn-hongkong"
 }
 
-variable "abandonable_check_ids" {
-  description = "List of services to check before account deletion"
-  type        = list(string)
-  default     = ["SP_fc_fc"]
-}
-
-variable "jenkins_folder_name" {
-  description = "Name of the Jenkins folder"
-  type        = string
-  default     = "Jenkins"
-}
-
-variable "jenkins_folder_id" {
-  description = "ID of existing Jenkins folder (if any)"
-  type        = string
-  default     = ""
-}
-
-variable "dev_folder_name" {
-  description = "Name of the Dev folder"
-  type        = string
-  default     = "Dev"
-}
-
-variable "dev_folder_id" {
-  description = "ID of existing Dev folder (if any)"
-  type        = string
-  default     = ""
-}
-
-variable "prod_folder_name" {
-  description = "Name of the Prod folder"
-  type        = string
-  default     = "Prod"
-}
-
-variable "prod_folder_id" {
-  description = "ID of existing Prod folder (if any)"
-  type        = string
-  default     = ""
-}
-
-variable "dev_account_name" {
-  description = "Name of the Dev account"
-  type        = string
-  default     = "DevAccount"
-}
-
 variable "dev_account_id" {
-  description = "ID of existing Dev account (if any)"
+  description = "Alibaba Cloud dev account ID under Core > DEV folder"
   type        = string
-  default     = ""
 }
 
-variable "prod_account_name" {
-  description = "Name of the Prod account"
+variable "vpc_name" {
+  description = "Name of the VPC"
   type        = string
-  default     = "ProdAccount"
+  default     = "dev-terraform-vpc"
 }
 
-variable "prod_account_id" {
-  description = "ID of existing Prod account (if any)"
+variable "vpc_cidr_block" {
+  description = "CIDR block for the VPC"
   type        = string
-  default     = ""
-}
-
-variable "payer_account_id" {
-  description = "ID of the payer account for billing"
-  type        = string
-  default     = "5183513340940185"  # Replace with your management account ID
+  default     = "10.0.0.0/16"
 }
