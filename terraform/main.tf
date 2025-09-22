@@ -1,3 +1,4 @@
+terraform {
   required_providers {
     alicloud = {
       source  = "aliyun/alicloud"
@@ -28,7 +29,7 @@ provider "alicloud" {
 # ===== 4. CALL THE MODULE AND PASS THE PROVIDER =====
 # This calls your VPC module and explicitly gives it the aliased provider.
 module "vpc" {
-  source = "./module/VPC" # Make sure this path is correct
+  source = "./modules/vpc" # Make sure this path is correct
 
   providers = {
     alicloud = alicloud.dev_account
