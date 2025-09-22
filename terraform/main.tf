@@ -8,7 +8,7 @@ provider "alicloud" {
   access_key = var.access_key
   secret_key = var.secret_key
   region     = var.region
-  account_id = var.dev_account_id
+  account_id = 5855213964512610
 }
 
 # Call the VPC module
