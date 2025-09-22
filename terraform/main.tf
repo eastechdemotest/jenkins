@@ -3,21 +3,17 @@ provider "alicloud" {
   region = "cn-hongkong"  # Change to your desired region, e.g., cn-beijing
 }
 
-# Call the resource_directory module
-module "resource_directory" {
-  source = "./module/resource_directory"
+# Provider configuration using RAM user credentials from master account
+provider "alicloud" {
+  access_key = var.access_key
+  secret_key = var.secret_key
+  region     = var.region
+  account_id = var.dev_account_id
+}
 
-  region                = var.region
-  abandonable_check_ids = var.abandonable_check_ids
-  jenkins_folder_name   = var.jenkins_folder_name
-  jenkins_folder_id     = var.jenkins_folder_id
-  dev_folder_name       = var.dev_folder_name
-  dev_folder_id         = var.dev_folder_id
-  prod_folder_name      = var.prod_folder_name
-  prod_folder_id        = var.prod_folder_id
-  dev_account_name      = var.dev_account_name
-  dev_account_id        = var.dev_account_id
-  prod_account_name     = var.prod_account_name
-  prod_account_id       = var.prod_account_id
-  payer_account_id      = var.payer_account_id
+# Call the VPC module
+module "vpc" {
+  source         = "./modules/vpc"
+  vpc_name       = var.vpc_name
+  vpc_cidr_block = var.vpc_cidr_block
 }
