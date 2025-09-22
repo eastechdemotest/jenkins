@@ -1,11 +1,3 @@
-terraform {
-  required_providers {
-    alicloud = {
-      source  = "aliyun/alicloud"
-      version = "~> 1.206.0"
-    }
-  }
-}
 
 # ===== 2. DEFINE THE DEFAULT PROVIDER (for the Master Account) =====
 # This authenticates using the credentials from Jenkins.
