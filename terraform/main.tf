@@ -20,7 +20,7 @@ provider "alicloud" {
 
 # ===== 4. CALL THE MODULE AND PASS THE PROVIDER =====
 # This calls your VPC module and explicitly gives it the aliased provider.
-module "vpc-dev" {
+module "vpc" {
   source = "./module/VPC" # Make sure this path is correct
 
   providers = {
