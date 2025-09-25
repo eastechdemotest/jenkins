@@ -33,7 +33,7 @@ module "vpc" {
 }
 
 module "oss_bucket" {
-  source = "./modules/oss"
+  source = "./module/OSS"
 
   # Also pass the aliased provider to this module
   providers = {
