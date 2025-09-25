@@ -20,17 +20,17 @@ provider "alicloud" {
 
 # ===== 4. CALL THE MODULE AND PASS THE PROVIDER =====
 # This calls your VPC module and explicitly gives it the aliased provider.
-module "vpc" {
-  source = "./module/VPC" # Make sure this path is correct
+#  module "vpc" {
+ # source = "./module/VPC" # Make sure this path is correct
 
-  providers = {
-    alicloud = alicloud.dev_account
-  }
+ # providers = {
+  #  alicloud = alicloud.dev_account
+  #}
 
   # Add any variables your module needs here
   # vpc_name   = "my-development-vpc"
   # cidr_block = "10.200.0.0/16"
-}
+#}
 
 module "oss_bucket" {
   source = "./module/OSS"
