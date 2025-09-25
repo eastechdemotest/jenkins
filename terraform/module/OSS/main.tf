@@ -1,5 +1,5 @@
 resource "alicloud_oss_bucket" "this" {
-  bucket = "jenkinssdssduhs"
+  bucket = var.bucket_name
   acl    = var.acl
   tags   = var.tags
 }

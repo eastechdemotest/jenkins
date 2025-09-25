@@ -41,7 +41,7 @@ module "oss_bucket" {
   }
 
   # Pass the required variables to the module
-  bucket_name = var.oss_bucket_name
+  bucket_name = "jenkinsdasdhas"
   tags = {
     Environment = "dev",
     ManagedBy   = "Terraform"
