@@ -31,3 +31,19 @@ module "vpc" {
   # vpc_name   = "my-development-vpc"
   # cidr_block = "10.200.0.0/16"
 }
+
+module "oss_bucket" {
+  source = "./modules/oss"
+
+  # Also pass the aliased provider to this module
+  providers = {
+    alicloud = alicloud.dev_account
+  }
+
+  # Pass the required variables to the module
+  bucket_name = var.oss_bucket_name
+  tags = {
+    Environment = "dev",
+    ManagedBy   = "Terraform"
+  }
+}
