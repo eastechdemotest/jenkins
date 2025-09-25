@@ -23,8 +23,4 @@ variable "vpc_cidr_block" {
   default     = "10.0.0.0/16"
 }
 
-variable "oss_bucket_name" {
-  type        = string
-  description = "A globally unique name for the OSS bucket."
-  # We don't set a default, so it must be provided in a .tfvars file.
-}
+
